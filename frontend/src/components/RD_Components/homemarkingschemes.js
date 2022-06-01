@@ -8,8 +8,11 @@ import EditSharpIcon from '@material-ui/icons/EditSharp';
 import DeleteForeverSharpIcon from '@material-ui/icons/DeleteForeverSharp';
 import SearchSharpIcon from '@material-ui/icons/SearchSharp';
 import KeyboardArrowDownRoundedIcon from '@material-ui/icons/KeyboardArrowDownRounded';
-
-
+import { saveAs } from "file-saver";
+import autoTable from 'jspdf-autotable'
+import { jsPDF } from "jspdf";
+import Footer from '../Layout/footer';
+import AdminNavBar from '../Layout/AdminNavBar';
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -18,10 +21,12 @@ toast.configure()
 export default class Homemarkingschemes extends Component {
     constructor(props){
     super(props);
-
+   
+ 
     this.state={
       createmarking:[]
     };
+    this.pdfGenerat = this.pdfGenerat.bind(this);
  }
 
 componentDidMount(){
@@ -59,13 +64,14 @@ onDelete = (createmarkingID) => {
 filterData(createmarking,searchKey) {
 
   const result = createmarking.filter((createmarkin) =>
-    createmarkin.deliverables.toLowerCase().includes(searchKey) ||
-    createmarkin.duedate.toLowerCase().includes(searchKey) ||
-    createmarkin.contribution.toLowerCase().includes(searchKey) ||
-    createmarkin.methodofsubmission.toLowerCase().includes(searchKey) ||
-    createmarkin.marksallocation.toLowerCase().includes(searchKey)
+    createmarkin.criteria.toLowerCase().includes(searchKey) ||
+    createmarkin.good.toLowerCase().includes(searchKey) ||
+    createmarkin.poor.toLowerCase().includes(searchKey) ||
+    createmarkin.avarage.toLowerCase().includes(searchKey) ||
+    createmarkin.comment.toLowerCase().includes(searchKey) ||
+    createmarkin.marks.toLowerCase().includes(searchKey)
   )
-  this.setState({createmarking: result })
+  this.setState({createmarking: result})
 }
 
 handleSearchArea = (e) => {
@@ -82,14 +88,30 @@ handleSearchArea = (e) => {
   });
 }
 
+//pdf generator
+
+ pdfGenerat(e){
+  var doc = new jsPDF('landscape', 'px', 'a4', 'false');
+  
+  doc.autoTable({
+         
+          body: [
+              [{ content:'Marking Schemes'  , colSpan: 2, rowSpan: 2, styles: { halign: 'center'  } }],
+            ],
+          })
+      autoTable(doc, { html: '#cusdet' })
+     doc.save('TopicRegister.pdf')
+
+        }
 
 render() {
+  
     return (
-      
+      <div><AdminNavBar/> 
       <div className="pt-3" align="center" background color="red" >
         <div className=" shadow mb-8 w-100" id="cardcol">
           <div className="card-header py-3" >
-            <h1 align="center"><b>&nbsp;&nbsp;&nbsp;Creat Marking Schemes</b></h1><br />
+            <h1 align="center"><b>&nbsp;&nbsp;&nbsp;Marking Schemes</b></h1><br />
 
             <div className="card-body" >
               <div className="col-md-8 mt-4 mx-auto"></div>
@@ -101,57 +123,85 @@ render() {
 
 
               </div>
+              <div>
+              <Button className="form-group" type="submit" style={{ background: "#E77471", width: 13 + "%", align: "right" }} startIcon={<InsertDriveFileIcon />} onClick={this.pdfGenerat}>
+                 Download</Button>
+              {/* <button className="btn btn-danger btn-sm"   onClick={this.pdfGenerat}>Download PDF</button> */}
+              </div>
               <div align="right">
 
                 <form onSubmit={this.handleSearchArea}>
                 
-                <Button className="form-group" style={{ background: "#737CA1", width: 15 + "%", align: "left" }} startIcon={<KeyboardArrowDownRoundedIcon />} >
-                Destination</Button>&nbsp;&nbsp;&nbsp;
 </form>
-        <table className="table table-hover" style={{ marginTop: '40px', background: "#FFFFFF" }} > 
+        <table className="table table-hover" id="cusdet"   style={{ marginTop: '40px', background: "#FFFFFF" }} > 
         <thead>
             <tr>
+               {/* <th scope ="col"> No </th> */}
                <th scope ="col"> Criteria </th>
                <th scope ="col"> Good (10-8) </th>
                <th scope ="col"> Avarage (4-7) </th>
                <th scope ="col"> Poor (0-3) </th>
                <th scope ="col"> Comment </th>
+               <th scope ="col"> Marks </th>
             </tr>
         </thead>
         <tbody>
-          {this.state.createmarking.map((createmarking,index) => (
+          {this.state.createmarking.map((createmarking) => (
              <tr>
-          <th scope="row">{index+1}</th>
+          {/* <th scope="row">{index+1}</th> */}
           <td>
             
             <a href={`/createmarking/${createmarking._id}`} style={{textDecoration:'none'}}>
-            {createmarking.deliverables}
+            {createmarking.criteria}
             </a>
             </td>
            
-          <td>{createmarking.duedate}</td>
-          <td>{createmarking.contribution}</td>
-          <td>{createmarking.methodofsubmission}</td>
-          <td>{createmarking.marksallocation}</td>
+          <td>{createmarking.good}</td>
+          <td>{createmarking.avarage}</td>
+          <td>{createmarking.poor}</td>
+          <td></td>
+          <td></td>
           <td> 
-            <a className="btn btn-warning" href={`/createmarkingedit/${createmarking._id}`}>
+            {/* <a className="btn btn-warning" href={`/createmarkingedit/${createmarking._id}`}>
               <i classname="fas fa-edit"></i>&nbsp;Edit
             </a>
             &nbsp;
             <a className="btn btn-danger" href="#" onClick={() =>this.onDelete(createmarking._id)}>
-              <i className="far fa-trash-alt"></i>&nbsp;Delete
-            </a>
+              <i className="far fa-trash-alt"></i>&nbsp;Delete */}
+
+              <Button className="form-group" type="submit" style={{ background: "#C3FDB8", width: 10 + "%", align: "center" }} startIcon={<EditSharpIcon />} href={`/createmarkingedit/${createmarking._id}`}>
+                        </Button>
+
+                        &nbsp;
+                        <Button className="form-group" type="submit" style={{ background: "#F75D59", width: 10 + "%", align: "center" }} startIcon={<DeleteForeverSharpIcon />} onClick={() => this.onDelete(createmarking._id)}>
+                        </Button>
+
+
+
+            {/* </a> */}
               </td>
                  </tr>
 
           ))}
         </tbody>
         </table>
-        <button className="btn btn-success"><a href="/createmarkingadd" style={{textDecoration:'none',color:'white'}}> Create New Point</a></button>
+        {/* <button className="btn btn-success"><a href="/createmarkingadd" style={{textDecoration:'none',color:'white'}}> Create New Point</a></button> */}
+
+        <div className="form-group">
+                <a href="/createmarkingadd">
+                  <Button variant="contained" className="w-10" align="left" style={{ background: "#CCCCFF", width: +"%" }} startIcon={< AddCircleOutlinedIcon />}  >
+                  Create New Point</Button>
+                </a>
+              </div>
+             
+            
       </div>
       </div>
       </div>
       </div>
+      </div>
+      <br/><br/><br/><br/>
+      <Footer/>
       </div>
     )
     

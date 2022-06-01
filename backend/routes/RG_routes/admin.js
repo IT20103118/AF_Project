@@ -13,7 +13,6 @@ router.post('/adminsignup', async (req, res) => {
       const {
         name, 
         phone,
-        nic,
         sliitid,
         email,
         password,
@@ -21,6 +20,7 @@ router.post('/adminsignup', async (req, res) => {
       } = req.body
 
       if(!name || !phone  || !sliitid ||  !email || !password  )
+<<<<<<< HEAD
 
       return res
      .status(400)
@@ -36,6 +36,25 @@ router.post('/adminsignup', async (req, res) => {
       errorMessage: "Please enter a first name of at least 3 characters.",
       });
 
+=======
+      return res
+      .status(400)
+      .json({errorMessage : "required"});
+  
+      if(name.length<4)
+      return res.status(400).json({
+          errorMessage: "Please enter a first name of at least 3 characters.",
+      });
+  
+  
+      if(phone.length<5)
+      return res.status(400).json({
+          errorMessage: "Please enter a first name of at least 3 characters.",
+      });
+
+ 
+
+>>>>>>> d8c872571c6fee8e4cf24ec726bc16fd2d6fcb46
       //Check application has already created account using given email or SLIIT  id  
       let admin_a = await admin.findOne({ email });
       if (admin_a) {
@@ -49,7 +68,7 @@ router.post('/adminsignup', async (req, res) => {
       admin_a = {
         name: name,
         phone:phone,
-        nic : nic,
+      
         sliitid : sliitid,
         email : email,
         password : password,

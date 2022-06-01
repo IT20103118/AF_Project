@@ -1,3 +1,7 @@
+import React from 'react';
+
+
+
 import React, { Component } from 'react'
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
@@ -17,6 +21,18 @@ import Adminregistration from './components/RD_Components/adminregistration';
 import AdminLogin from './components/RD_Components/adminlogin';
 import Admindashboard from './components/RD_Components/admindashboard';
 import AdminProfile from './components/RD_Components/adminProfile';
+import AdminViewStaff from './components/SS_Components/AdminViewStaff';
+import Createmarkingschemes from './components/RD_Components/createmarkingschemes';
+import Homemarkingschemes from './components/RD_Components/homemarkingschemes';
+import Editmarkingschemes from './components/RD_Components/editmarkingschemes';
+import Markingschemesdetails from './components/RD_Components/markingschemesdetails';
+import Usersremove from './components/RD_Components/usersremove';
+import Supervisorremove from './components/RD_Components/supervisorremove';
+import CoSupervisorremove from './components/RD_Components/cosupervisorremove';
+import Studentsremove from './components/RD_Components/studentsremove';
+import presantationpdfupload from './components/RD_Components/presantationpdfupload';
+import Evaluate from './components/RD_Components/evaluate';
+import Evaluateedit from './components/RD_Components/evaluateedit';
 import GroupRegistration from './components/AA_Components/student-group-name-registration';
 import Add_Group_Members from './components/AA_Components/group-members-reg';
 import Groupss from './components/AA_Components/student.groups';
@@ -37,6 +53,7 @@ import PDFDisplay from './components/SS_Components/PDFDisplay';
 import SupervisorAcceptTopic from './components/SS_Components/SupervisorAcceptTopic';
 import CoSupervisorAcceptTopic from './components/SS_Components/CoSupervisorAcceptTopic';
 import AdminViewStaff from './components/SS_Components/AdminViewStaff';
+import Chatdialog from './components/chat/Chatdialog';
 
 export default class App extends Component {
  
@@ -45,6 +62,10 @@ export default class App extends Component {
       
   <Router>
     <Switch>
+{/* // function App() {
+//   return (
+//    <Router>
+//    <Switch> */}
      <Route path = "/" component={StudentHomePage} exact/>
      <Route path = "/staff" component={BackendHomePage}/>
      <Route path = "/stafflogin" component={StaffLogin}/>
@@ -76,16 +97,39 @@ export default class App extends Component {
      <Route path = "/adminsignin" component={AdminLogin}/>  
      <Route path = "/admindashboard" component={Admindashboard}/>  
      <Route path = "/adminprofile" component={AdminProfile}/>  
+
+     <Route path = "/homemarkingschemes" component={Homemarkingschemes}/> 
+    <Route path = "/createmarkingadd" component={Createmarkingschemes}/>
+    <Route path = "/createmarkingedit/:createmarkingID" component={Editmarkingschemes}/>
+    <Route path = "/createmarking/:createmarkingID" component={Markingschemesdetails}/>
+    <Route path = "/getpanelmember" component={Usersremove}/>
+    <Route path = "/getsupervisor" component={Supervisorremove}/>
+    <Route path = "/getcosupervisor" component={CoSupervisorremove}/>
+    <Route path = "/getstudent" component={Studentsremove}/>
+    <Route path = "/presantation" component={presantationpdfupload}/>
+    <Route path = "/evaluate" component={Evaluate}/>
+    <Route path = "/evaluateedit/:createmarkingID" component={Evaluateedit}/>
+    <Route path = "/chatdialog" component={Chatdialog}/>
+
+
+
+
+
+    {/* <Route path = "/createmarkingschemes" component={Createmarkingschemes}/>  */}
+
+    <Route path = "/regtopic/research/:id" component={AddResearchTopic}/> 
+    <Route path = "/regtopic/displayresearchtopic" component={Display_researchtopics}/> 
+    <Route path = "/regtopic/addSupervisor/:id/:feild" component={AddSupervisors}/> 
+    <Route path = "/regtopic/displaysupervisors" component={Display_supervisors}/>
+    <Route path = "/regtopic/addcoSupervisor/:id/:feild" component={AddCoSupervisors}/> 
+    <Route path = "/regtopic/displaycosupervisors" component={Display_co_supervisors}/> 
+    <Route path = "/regtopic/getsupervisor/:feild" component={AddSupervisors}/> 
+    <Route path = "/regtopic/getcosupervisor/:feild" component={AddCoSupervisors}/>
+    <Route path = "/document/submitdoc" component={DocUpload}/> 
+   
+
      
-     <Route path = "/regtopic/research/:id" component={AddResearchTopic}/> 
-     <Route path = "/regtopic/displayresearchtopic" component={Display_researchtopics}/> 
-     <Route path = "/regtopic/addSupervisor/:id/:feild" component={AddSupervisors}/> 
-     <Route path = "/regtopic/displaysupervisors" component={Display_supervisors}/>
-     <Route path = "/regtopic/addcoSupervisor/:id/:feild" component={AddCoSupervisors}/> 
-     <Route path = "/regtopic/displaycosupervisors" component={Display_co_supervisors}/> 
-     <Route path = "/regtopic/getsupervisor/:feild" component={AddSupervisors}/> 
-     <Route path = "/regtopic/getcosupervisor/:feild" component={AddCoSupervisors}/>
-     <Route path = "/document/submitdoc" component={DocUpload}/> 
+    
    
             </Switch>
         </Router>
