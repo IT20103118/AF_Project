@@ -53,7 +53,7 @@ const adminRouter = require('./routes/RG_routes/admin');
 const createmarkingRouter = require('./routes/RG_routes/createmarking');
 const usersremoveRoutes = require('./routes/RG_routes/usersremove');
 const presantationpdfuploadRoutes = require('./routes/RG_routes/presantationpdf');
-// const Evaluate = require('./routes/RG_routes/evaluate');
+//const Evaluate = require('./routes/RG_routes/evaluate');
 
 // rotues use
 app.use("/group",studentgroupRouter);
@@ -66,7 +66,7 @@ app.use("/createmarking",createmarkingRouter);
 app.use("/usersremove",usersremoveRoutes);
 app.use("/presantationpdf",presantationpdfuploadRoutes);
 app.use("/assignment",PDFUploadRouter);
-// app.use("/evaluate",Evaluate);
+//app.use("/evaluate",Evaluate);
 
 
 
